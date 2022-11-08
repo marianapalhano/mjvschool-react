@@ -1,3 +1,5 @@
+import { Card } from "../Card"
+
 export function List() {
     const users = [
         {
@@ -28,7 +30,9 @@ export function List() {
     return (
         <ul>
             {
-                users.map(user => <li>{user.lastname} - {user.name} - {user.age}</li>)
+                users.map(user => 
+                    <Card key={user.id} {...user} />
+                )
             }
         </ul>
     )
