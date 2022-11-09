@@ -1,5 +1,7 @@
-export function Card({lastname, name, age}) {
+export function Card({ image }) {
     return (
-        <li>{lastname} - {name} - {age}</li>
+        <li>
+            <img src={image} alt="" />
+        </li>
     )
 }
