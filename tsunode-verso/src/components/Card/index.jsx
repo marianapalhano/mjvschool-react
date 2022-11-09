@@ -1,7 +1,9 @@
+import { Container } from "./styles";
+
 export function Card({ image }) {
     return (
-        <li>
+        <Container>
             <img src={image} alt="" />
-        </li>
+        </Container>
     )
 }

@@ -1,8 +1,8 @@
-import { Button } from './components/Button'
-import { Input } from './components/Input'
-import { List } from './components/List'
-import { MdEmail } from 'react-icons/md'
-import GlobalStyle from './styles/GlobalStyle'
+import { Input } from './components/Input';
+import { List } from './components/List';
+import { MdEmail } from 'react-icons/md';
+import GlobalStyle from './styles/GlobalStyle';
+import { Dashboard } from './pages/Dashboard';
 
 function App() {
   return (
@@ -19,9 +19,7 @@ function App() {
       <Input label='Senha:' id='password' type='password' name='password'>
       </Input>
 
-      <Button>
-        Teste
-      </Button>
+      <Dashboard />
     </div>
   )
 }
