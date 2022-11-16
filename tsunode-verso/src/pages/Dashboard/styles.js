@@ -7,6 +7,8 @@ export const Section = styled.section`
         display: grid;
         grid-template-columns: repeat(auto-fill, 245px);
         grid-auto-rows: auto;
+        grid-gap: 8px;
         list-style: none;
+        justify-content: center;
     }
 `;

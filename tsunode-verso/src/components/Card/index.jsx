@@ -12,7 +12,8 @@ export function Card({ image }) {
             return;
         }
         const { height } = imageRef.current.height;
-        setImageSize(Math.round(height / GRID_SECTION_ROW_SIZE));
+        const GRID_CONTENT_SPAN_SIZE = 4;
+        setImageSize(Math.round(height / GRID_SECTION_ROW_SIZE) + GRID_CONTENT_SPAN_SIZE);
     }
 
     return (
