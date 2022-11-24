@@ -1,22 +1,33 @@
+import { useEffect, useState } from "react";
+import { api } from "../../services/api";
 import { Card } from "../../components/Card";
+import { Header } from "../../components/Header";
+import { Main } from "../../styles/Main";
 import { Section } from "./styles";
 
-import image3 from "../../assets/image3.png";
-import image5 from "../../assets/image5.png";
-
 export function Dashboard() {
+    const [projects, setProjects] = useState([]);
+
+    useEffect(() => {
+        api.get('/projects', {
+            page: 1,
+            pageSize: 20
+        })
+        .then((response) => setProjects(response.data))
+        .catch(error => console.error(error))
+    }, [])
+
     return (
-        <Section>
-            <ul>
-                <Card image={image3} />
-                <Card image={image5} />
-                <Card image={image5} />
-                <Card image={image3} />
-                <Card image={image3} />
-                <Card image={image5} />
-                <Card image={image3} />
-                <Card image={image3} />
-            </ul>
-        </Section>
+        <Main>
+            <Header />
+            <Section>
+                <ul>
+                    {   projects.map(project => {
+                            <Card key={project.id} {...project} />
+                        })                    
+                    }
+                </ul>
+            </Section>
+        </Main>
     )
 }

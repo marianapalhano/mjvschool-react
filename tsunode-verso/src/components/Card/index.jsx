@@ -3,7 +3,7 @@ import { GRID_SECTION_ROW_SIZE } from "../../pages/Dashboard/styles";
 import { Container } from "./styles";
 import { Avatar } from "../Avatar";
 
-export function Card({ image }) {
+export function Card({ thumbUrl, title, link, user }) {
     const imageRef = useRef();
     const [imageSize, setImageSize] = useState(0);
 
@@ -18,18 +18,20 @@ export function Card({ image }) {
 
     return (
         <Container size={imageSize}>
-            <div>
-                <img
-                    ref={imageRef}
-                    onLoad={getImageSize}
-                    src={image}
-                    alt="" 
-                />
-                <p>Banco de dados do sistema financeiro do Banco do Brasil</p>
-            </div>
-            <div>
+            <a href={link} target='_blank' rel='noreferrer'>
+                <div>                
+                    <img
+                        ref={imageRef}
+                        onLoad={getImageSize}
+                        src={thumbUrl}
+                        alt={title} 
+                    />
+                    <p>{title}</p>
+                </div>
+            </a>
+            <div>            
                 <Avatar />
-                <span>Mariana Palhano</span>
+                <span>{user.name} {user.surname}</span>
             </div>
         </Container>
     )
