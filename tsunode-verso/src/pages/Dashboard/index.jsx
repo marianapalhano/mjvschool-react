@@ -4,6 +4,7 @@ import { Card } from "../../components/Card";
 import { Header } from "../../components/Header";
 import { Main } from "../../styles/Main";
 import { Section } from "./styles";
+import { Button } from "../../styles/Button";
 
 export function Dashboard() {
     const [projects, setProjects] = useState([]);
@@ -19,7 +20,12 @@ export function Dashboard() {
 
     return (
         <Main>
-            <Header />
+            <Header>
+                <form>
+                    <Input label='Buscar projetos...' id='project' name='project' />
+                </form>
+                <Button variant='primary'>Novo Projeto</Button>
+            </Header>
             <Section>
                 <ul>
                     {   projects.map(project => {
