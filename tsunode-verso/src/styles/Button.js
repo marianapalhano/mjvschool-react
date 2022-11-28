@@ -18,7 +18,7 @@ const StyledButton = {
     `,
 }
 
-export const Button = styled.button<IButtonProps>`
+export const Button = styled.button`
     ${({ variant }) => StyledButton[variant]}
     border: none;
     min-height: 48px;

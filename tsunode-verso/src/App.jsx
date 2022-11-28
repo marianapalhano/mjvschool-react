@@ -7,8 +7,8 @@ function App() {
     <div>
       <GlobalStyle />
 
-      {/* <Dashboard /> */}
-      <Register />
+      <Dashboard />
+      {/* <Register /> */}
     </div>
   )
 }
