@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Main } from "../../styles/Main";
-import { Steps } from "./styles";
 import { Input } from "../../components/Input";
+import { Steps } from "./styles";
+import { Main } from "../../styles/Main";
+import { Form } from "../../styles/Form"
 
 import tsunodeverso from "../../assets/tsunodeverso.svg";
 
@@ -12,7 +13,7 @@ export function Register() {
         <Main>
             <img src={tsunodeverso} alt='Logo tsunode verso' /> 
 
-            <form>
+            <Form>
                 <fieldset>
                     <legend>Faça seu cadastro:</legend>
                     <Steps step={step}>
@@ -55,7 +56,7 @@ export function Register() {
                         </div>
                     }
                 </fieldset>
-            </form>
+            </Form>
         </Main>
     )
 }
