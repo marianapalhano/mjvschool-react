@@ -1,7 +1,11 @@
 import { useEffect, useRef } from "react";
 
-export function InfiniteScroll({ callback }) {
-    const InfiniteScrollDivRef = useRef(null);
+interface IInfiniteScrollProps {
+    callback: () => void;
+}
+
+export function InfiniteScroll({ callback }: IInfiniteScrollProps) {
+    const InfiniteScrollDivRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const intersectionObserver = new IntersectionObserver(([entry]) => {

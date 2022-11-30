@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { Card } from "../../components/Card";
 import { Header } from "../../components/Header";
@@ -7,13 +7,36 @@ import { Button } from "../../styles/Button";
 import { Input } from "../../components/Input";
 import { InfiniteScroll } from "../../components/InfiniteScroll";
 
+interface IUser {
+    name: string;
+    surname: string;
+    title: string;
+    avatar: string;
+    avatarUrl: string;
+}
+
+export interface IProject {
+    id: string
+    title: string;
+    description: string;
+    link: string;
+    adtionalLink: string;
+    thumb: string;
+    thumbUrl: string;
+    user: IUser;
+    createdAt: Date;
+    updatedAt: Date;
+    elapsedTime: string;
+}
+
 export function Dashboard() {
-    const [projects, setProjects] = useState([]);
+    const [projects, setProjects] = useState<IProject[]>([]);
     const [page, setPage] = useState(1);
+    const [searchInput, setSearchInput] = useState('');
     const [search, setSearch] = useState('');
 
     useEffect(() => {
-        api.get('/projects', {
+        api.get<IProject[]>('/projects', {
             params: {
                 page,
                 pageSize: 5,
@@ -28,12 +51,11 @@ export function Dashboard() {
             }
         })
         .catch(error => console.error(error))
-    }, [page, search]);
+    }, [page]);
 
-    function handleSubmit(event) {
+    function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        setSearch(event.target.project.value);
-        setProjects([]);
+        setSearch(searchInput);
         setPage(1);
     }
 
@@ -45,7 +67,7 @@ export function Dashboard() {
                         label='Buscar projetos...' 
                         id='project'
                         name='project'
-                        onChange={(event) => setProjects(event.target.value)}
+                        onChange={(event) => setSearchInput(event.target.value)}
                     />
                 </form>
                 <Button variant='primary'>Novo Projeto</Button>

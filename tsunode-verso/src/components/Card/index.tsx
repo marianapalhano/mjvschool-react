@@ -1,17 +1,22 @@
-import { useRef, useState } from "react";
+import { SyntheticEvent, useRef, useState } from "react";
 import { GRID_SECTION_ROW_SIZE } from "../../pages/Dashboard/styles";
 import { Container } from "./styles";
 import { Avatar } from "../Avatar";
+import { IProject } from "../../pages/Dashboard";
 
-export function Card({ thumbUrl, title, link, user }) {
+interface ITargetImage {
+    height: number;
+}
+
+export function Card({ thumbUrl, title, link, user }: IProject) {
     const imageRef = useRef();
-    const [imageSize, setImageSize] = useState(0);
+    const [imageSize, setImageSize] = useState(30);
 
-    function getImageSize() {
+    function getImageSize(event: SyntheticEvent<HTMLImageElement, Event>) {
         if (!imageRef.current) {
             return;
         }
-        const { height } = imageRef.current.height;
+        const { height } = event.target as unknown as ITargetImage;
         const GRID_CONTENT_SPAN_SIZE = 4;
         setImageSize(Math.round(height / GRID_SECTION_ROW_SIZE) + GRID_CONTENT_SPAN_SIZE);
     }
@@ -21,7 +26,6 @@ export function Card({ thumbUrl, title, link, user }) {
             <a href={link} target='_blank' rel='noreferrer'>
                 <div>                
                     <img
-                        ref={imageRef}
                         onLoad={getImageSize}
                         src={thumbUrl}
                         alt={title} 

@@ -1,10 +1,14 @@
-import { Children } from "react";
+import { Children, ReactNode } from "react";
 import { Avatar } from "../Avatar";
 import { Container } from "./styles";
 
 import logoTsunodeVerso from "../../assets/tsunodeverso.svg";
 
-export function Header({ children }) {
+interface IHeaderProps {
+    children: ReactNode;
+}
+
+export function Header({ children }: IHeaderProps) {
     const [SearchForm, NewProjectLink] = Children.toArray(children);
     return (
         <Container>

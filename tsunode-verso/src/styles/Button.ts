@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 
-// interface IButtonProps {
-//     variant: 'primary' | 'error' | 'inline';
-// }
+interface IButtonProps {
+    variant: 'primary' | 'error' | 'inline';
+}
 
 const StyledButton = {
     primary: css` 
@@ -18,7 +18,7 @@ const StyledButton = {
     `,
 }
 
-export const Button = styled.button`
+export const Button = styled.button<IButtonProps>`
     ${({ variant }) => StyledButton[variant]}
     border: none;
     min-height: 48px;
