@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
+import axios from "axios";
 import { api } from "../../services/api";
 import { Card } from "../../components/Card";
 import { Header } from "../../components/Header";
@@ -34,14 +35,20 @@ export function Dashboard() {
     const [page, setPage] = useState(1);
     const [searchInput, setSearchInput] = useState('');
     const [search, setSearch] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        setLoading(true);
+        const { CancelToken } = axios;
+        const source = CancelToken.source();
+
         api.get<IProject[]>('/projects', {
             params: {
                 page,
                 pageSize: 5,
                 q: search
-            }
+            },
+            cancelToken: source.token
         })
         .then((response) => {
             if (search && page === 1) {
@@ -51,6 +58,11 @@ export function Dashboard() {
             }
         })
         .catch(error => console.error(error))
+        .finally(() => setLoading(false))
+
+        return () => {
+            source.cancel();
+        }
     }, [page]);
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -83,7 +95,7 @@ export function Dashboard() {
                         )
                     }
                 </ul>
-                {<InfiniteScroll callback={ () => setPage((oldPage) => oldPage + 1) } />}
+                {<InfiniteScroll loading={loading} callback={ () => setPage((oldPage) => oldPage + 1) } />}
             </Section>
         </main>
     )

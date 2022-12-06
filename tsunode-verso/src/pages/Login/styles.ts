@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
-interface IStepsProps {
+interface IStepProps {
     step: number;
 }
 
-export const Steps = styled.div<IStepsProps>`
+export const Steps = styled.div<IStepProps>`
     display: flex;
     justify-content: center;
-    width: 100%;
     div {
         width: 12px;
         height: 12px;

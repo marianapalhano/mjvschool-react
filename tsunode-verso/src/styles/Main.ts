@@ -10,5 +10,6 @@ export const Main = styled.main`
     margin: auto;
     img {
         max-width: 200px;
+        margin-bottom: 56px;
     }
-`
+`;
