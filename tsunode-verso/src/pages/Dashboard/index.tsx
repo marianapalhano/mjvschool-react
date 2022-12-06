@@ -35,10 +35,8 @@ export function Dashboard() {
     const [page, setPage] = useState(1);
     const [searchInput, setSearchInput] = useState('');
     const [search, setSearch] = useState('');
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        setLoading(true);
         const { CancelToken } = axios;
         const source = CancelToken.source();
 
@@ -58,7 +56,6 @@ export function Dashboard() {
             }
         })
         .catch(error => console.error(error))
-        .finally(() => setLoading(false))
 
         return () => {
             source.cancel();
@@ -95,7 +92,7 @@ export function Dashboard() {
                         )
                     }
                 </ul>
-                {<InfiniteScroll loading={loading} callback={ () => setPage((oldPage) => oldPage + 1) } />}
+                {<InfiniteScroll callback={ () => setPage((oldPage) => oldPage + 1) } />}
             </Section>
         </main>
     )

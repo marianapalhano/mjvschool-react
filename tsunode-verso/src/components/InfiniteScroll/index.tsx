@@ -2,16 +2,15 @@ import { useEffect, useRef } from "react";
 
 interface IInfiniteScrollProps {
     callback: () => void;
-    loading: boolean;
 }
 
-export function InfiniteScroll({ callback, loading }: IInfiniteScrollProps) {
+export function InfiniteScroll({ callback }: IInfiniteScrollProps) {
     const InfiniteScrollDivRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const intersectionObserver = new IntersectionObserver(([entry]) => {
             const { intersectionRatio: ratio } = entry;
-            if (ratio > 0 && !loading) {
+            if (ratio > 0) {
                 callback();
             }
         }, { rootMargin: '5px' });
