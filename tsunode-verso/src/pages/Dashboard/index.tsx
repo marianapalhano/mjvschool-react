@@ -1,5 +1,6 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 import { api } from "../../services/api";
 import { Card } from "../../components/Card";
 import { Header } from "../../components/Header";
@@ -34,7 +35,9 @@ export function Dashboard() {
     const [projects, setProjects] = useState<IProject[]>([]);
     const [page, setPage] = useState(1);
     const [searchInput, setSearchInput] = useState('');
-    const [search, setSearch] = useState('');
+    const [hasNextPage, setHasNextPage] = useState(true);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const isFirstRender = useRef(true);
 
     useEffect(() => {
         const { CancelToken } = axios;
@@ -44,28 +47,41 @@ export function Dashboard() {
             params: {
                 page,
                 pageSize: 5,
-                q: search
+                q: searchParams.get('q')
             },
             cancelToken: source.token
         })
         .then((response) => {
-            if (search && page === 1) {
-                setProjects(response.data)
+            const { data } = response;
+
+            if (page === 1) {
+                setProjects(data)
             } else {
-                setProjects((oldProjects) => [...oldProjects, ...response.data])
+                setProjects((oldProjects) => [...oldProjects, ...data])
+            }
+
+            if (!data.length) {
+                setHasNextPage(false);
             }
         })
         .catch(error => console.error(error))
 
         return () => {
+            if (isFirstRender.current) {
+                isFirstRender.current = false;
+                return;
+            }
             source.cancel();
         }
-    }, [page]);
+    }, [page, searchParams]);
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        setSearch(searchInput);
+        setSearchParams({
+            q: searchInput
+        });
         setPage(1);
+        setHasNextPage(true);
     }
 
     return (
@@ -92,7 +108,10 @@ export function Dashboard() {
                         )
                     }
                 </ul>
-                {<InfiniteScroll callback={ () => setPage((oldPage) => oldPage + 1) } />}
+                <InfiniteScroll
+                    callback={() => setPage((oldPage) => oldPage + 1)}
+                    hasNextPage={hasNextPage}
+                />
             </Section>
         </main>
     )
