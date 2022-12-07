@@ -2,10 +2,11 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import { api } from "../../services/api";
+import { FiSearch } from "react-icons/fi";
 import { Card } from "../../components/Card";
 import { Header } from "../../components/Header";
 import { Section } from "./styles";
-import { Button } from "../../styles/Button";
+import { Button, Link } from "../../styles/Button";
 import { Input } from "../../components/Input";
 import { InfiniteScroll } from "../../components/InfiniteScroll";
 
@@ -93,9 +94,13 @@ export function Dashboard() {
                         id='project'
                         name='project'
                         onChange={(event) => setSearchInput(event.target.value)}
-                    />
+                    >
+                        <Button variant="inline" width="auto">
+                            <FiSearch />
+                        </Button>
+                    </Input>
                 </form>
-                <Button variant='primary'>Novo Projeto</Button>
+                <Link to='/new-project' variant='primary'>Novo Projeto</Link>
             </Header>
             <Section>
                 <ul>

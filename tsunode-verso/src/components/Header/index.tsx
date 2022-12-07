@@ -16,7 +16,7 @@ export function Header({ children }: IHeaderProps) {
             { SearchForm }
             <div>
                 { NewProjectLink }
-                <Avatar />
+                <Avatar size={60} />
             </div>
         </Container>
     )

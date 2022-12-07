@@ -21,4 +21,9 @@ export const Form = styled.form`
             margin-top: 15px;
         }
     }
+
+    p {
+        text-align: center;
+        margin: 18px 0;
+    }
 `
