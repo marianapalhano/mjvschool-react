@@ -1,29 +1,26 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
+import { schema } from "./validations";
+import { yupResolver } from "@hookform/resolvers/yup"; 
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Input } from "../../components/Input";
 import { Steps } from "./styles";
 import { Main } from "../../styles/Main";
 import { Button } from "../../styles/Button";
 import { FormStep } from "../../styles/FormStep";
+import { IRegisterData } from "./types";
 
 import tsunodeverso from "../../assets/tsunodeverso.svg";
 
-interface IRegisterData {
-    name: string;
-    surname: string;
-    title: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-}
-
 export function Register() {
     const [step, setStep] = useState(1);
-    const { register, handleSubmit } = useForm<IRegisterData>();
+    const [showPassword, setShowPassword] = useState(false);
+    const { register, handleSubmit, formState: { errors } } = useForm<IRegisterData>({
+        resolver: yupResolver(schema)
+    });
 
     function registerUser(data: IRegisterData) {
-
+        console.log(data)
     }
 
     return (
@@ -46,20 +43,23 @@ export function Register() {
                         <Input 
                             id='name' 
                             label='Name:' 
-                            type='text'  
-                            {...register('name')}
+                            type='text'                              
+                            error={errors.name?.message} 
+                            {...register('name')} 
                            />
                         <Input 
                             id='surname' 
                             label='Sobrenome:' 
                             type='text'
-                            {...register('surname')}
+                            error={errors.surname?.message}
+                            {...register('surname')} 
                         />
                         <Input 
                             id='title' 
                             label='Título (opcional):' 
                             type='text'
-                            {...register('title')}
+                            error={errors.title?.message}
+                            {...register('title')} 
                         />
                         <Button type="button" variant='primary' onClick={() => setStep(2)}>Próximo</Button>
                     </div>
@@ -69,19 +69,26 @@ export function Register() {
                             id='email'  
                             label='E-mail:' 
                             type='email'  
-                            {...register('email')}
+                            error={errors.email?.message}
+                            {...register('email')} 
                         />
-                        <Input 
+                        <Input
                             id='password' 
                             label='Senha:' 
-                            type='password'  
-                            {...register('password')}
-                        />
+                            type={showPassword ? 'text' : 'password'}   
+                            error={errors.password?.message}
+                            {...register('password')} 
+                        >
+                            <Button type="button" variant="inline" onClick={() => setShowPassword(!showPassword)}>
+                                { showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+                            </Button>
+                        </Input>
                         <Input 
                             id='confirm-password' 
                             label='Confirmar senha:' 
                             type='password'  
-                            {...register('confirmPassword')}
+                            error={errors.confirmPassword?.message}
+                            {...register('confirmPassword')} 
                         />
                         <Button type="submit" variant='primary'>Concluir</Button>
                         <Button type="button" variant='inline' onClick={() => setStep(1)}>Voltar</Button>

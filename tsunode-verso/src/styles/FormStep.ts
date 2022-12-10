@@ -4,7 +4,6 @@ interface IFormStepProps {
     step: number
 }
 
-
 export const FormStep = styled.form<IFormStepProps>`
     --selected-item: ${({ step }) => step - 1};
     --total-items: 2;
